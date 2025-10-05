@@ -2,6 +2,7 @@ import os
 import platform
 import subprocess
 import shutil
+from safety import is_dangerous_command
 
 class ShellCommandExecutor:
     def __init__(self):
@@ -16,6 +17,10 @@ class ShellCommandExecutor:
         cmd = parts[0]
         args = parts[1:]
 
+        if is_dangerous_command(cmd):
+            if not self.confirm("You are about to delete a file or directory. Proceed? (Y/N)"):
+                return "Aborted by user"
+            
         # Built-in commands
         if cmd == "cd":
             return self.change_directory(args)
@@ -56,3 +61,11 @@ class ShellCommandExecutor:
             return result.stdout + result.stderr
         except Exception as e:
             return str(e)
+
+    def confirm(self, prompt_text):
+        while True:
+            ans = input(prompt_text + " ").strip().lower()
+            if ans == 'y':
+                return True
+            elif ans == 'n':
+                return False
