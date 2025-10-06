@@ -61,11 +61,11 @@ def run_shell():
 
     while True:
         try:
+            cwd = os.getcwd()
             prompt_tokens = make_prompt(executor.current_dir)
             command = session.prompt(prompt_tokens)
 
             output = executor.execute(command)
-
             if output == "EXIT":
                 break
             elif output.strip():
