@@ -6,6 +6,9 @@ from prompt_toolkit.completion import Completer, Completion, PathCompleter, Word
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.styles import Style
 from shell_commands import ShellCommandExecutor
+from ai_integration import AIIntegration
+
+os.environ["GRPC_VERBOSITY"] = "ERROR" # Ignore the warnings
 
 # Define built-in commands for autocomplete
 COMMANDS = [
@@ -45,6 +48,7 @@ def make_prompt(path):
 def run_shell():
     clear_screen()
     executor = ShellCommandExecutor()
+    ai_integration = AIIntegration()
     print_banner(executor.current_dir)
 
     style = Style.from_dict({
@@ -64,12 +68,25 @@ def run_shell():
             cwd = os.getcwd()
             prompt_tokens = make_prompt(executor.current_dir)
             command = session.prompt(prompt_tokens)
+            
+            if command.startswith("/ai "):
+                ai_prompt = command[len("/ai "):]
+                print(f"AI Processing: {ai_prompt}")
+                ai_command = ai_integration.parse_natural_language(ai_prompt)
 
-            output = executor.execute(command)
-            if output == "EXIT":
-                break
-            elif output.strip():
-                print(output)
+                print(f"AI Suggested Command: {ai_command}")
+                if ai_command.strip():
+                    output = executor.execute(ai_command)
+                    if output.strip():
+                        print(output)
+                else:
+                    print("AI could not generate a valid command.")
+            else: 
+                output = executor.execute(command)
+                if output == "EXIT":
+                    break
+                elif output.strip():
+                    print(output)
 
         except KeyboardInterrupt:
             continue

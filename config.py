@@ -1,6 +1,6 @@
 import os
 
-AI_PROVIDER = "gemini"  # Or 'openai'
+AI_PROVIDER = "gemini"
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = "AIzaSyCRgSN0aIbnCIhG40sO9JMEcNirE8MSfsY"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
