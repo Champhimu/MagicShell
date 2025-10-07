@@ -8,7 +8,7 @@
 
   <p align="center">
     <img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python Version">
-    <img src="https://img.shields.io/github/license/Champhimu/MagicShell" alt="License">
+    <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License">
     <img src="https://img.shields.io/github/stars/Champhimu/MagicShell?style=social" alt="GitHub Stars">
     <img src="https://img.shields.io/badge/platform-win%20%7C%20mac%20%7C%20linux-lightgrey" alt="Platforms">
   </p>
