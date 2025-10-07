@@ -1,11 +1,13 @@
 import config
 import google.generativeai as genai
 import platform
+import os
 from safety import strip_code_fences
 
 class AIIntegration:
     def __init__(self):
         if config.AI_PROVIDER == "gemini":
+            # self._set_proxies()
             self.client = self._init_gemini_client()
         else:
             import openai
@@ -20,6 +22,12 @@ class AIIntegration:
         except Exception as e:
             print(f"Failed to initialize Gemini client: {e}")
             return None
+
+    # def _set_proxies(self):
+    #     if getattr(config, 'USE_PROXY', False):
+    #         proxy_url = config.PROXY_URL
+    #         os.environ['HTTP_PROXY'] = proxy_url
+    #         os.environ['HTTPS_PROXY'] = proxy_url
 
     def parse_natural_language(self, prompt: str) -> str:
         if self.client is None:

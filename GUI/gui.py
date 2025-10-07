@@ -135,10 +135,11 @@ class ShellGUI(tk.Tk):
             return b
 
         make_side_btn("Home", self._go_home)
+        make_side_btn("Chat with AI", self._chat_with_AI)
         make_side_btn("History", self._show_history)
+        make_side_btn("Connect GIT", self._git_connected)
+        make_side_btn("Connect Docker", self._docker_connected)
         make_side_btn("Settings", self._open_settings)
-        make_side_btn("Git Connected", self._git_connected)
-        make_side_btn("Docker Connected", self._docker_connected)
         make_side_btn("Exit", self.quit)
 
         # Main area
@@ -271,6 +272,9 @@ class ShellGUI(tk.Tk):
         self.insert_text("Command History:", "success")
         for i, c in enumerate(hist[-50:], start=1):
             self.insert_text(f"{i}. {c}", "stdout")
+
+    def _chat_with_AI(self):
+        self.insert_text("Chat with AI", "success")
 
     # Suggestions
     def _on_cmd_type(self, event=None):
